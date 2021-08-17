@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ReactElement } from "react";
 import Currency from "react-currency-formatter";
 import { useSelector } from "react-redux";
-import CheckoutProduct from "src/components/CheckoutProduct";
+import CheckoutProduct from "@src/components/product/CheckoutProduct";
 import {
   selectItems,
   selectTotal,
