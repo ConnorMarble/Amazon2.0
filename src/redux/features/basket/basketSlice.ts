@@ -35,10 +35,14 @@ const basketSlice = createSlice({
 
       state.items = newBasket;
     },
+    clearBasket: (state) => {
+      state.items = [];
+    },
   },
 });
 
-export const { setBasket, addToBasket, removeFromBasket } = basketSlice.actions;
+export const { setBasket, addToBasket, removeFromBasket, clearBasket } =
+  basketSlice.actions;
 
 // Selectors
 export const selectItems = (state: RootState): ProductInterface[] =>

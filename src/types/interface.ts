@@ -8,3 +8,12 @@ export interface ProductInterface {
   rating: number;
   hasPrime: boolean;
 }
+
+export interface OrderInterface {
+  id: string;
+  amount: number;
+  amountShipping: number;
+  images: string[];
+  timestamp: number;
+  items: ProductInterface[];
+}

@@ -1,3 +1,5 @@
+import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
 import { useSession } from "next-auth/client";
 import Image from "next/image";
 import { ReactElement } from "react";
@@ -9,10 +11,28 @@ import {
   selectTotal,
 } from "src/redux/features/basket/basketSlice";
 
+const stripePromise = loadStripe(process.env.stripe_public_key);
+
 export default function Checkout(): ReactElement {
   const items = useSelector(selectItems);
   const total = useSelector(selectTotal);
   const [session] = useSession();
+
+  const createCheckoutSession = async () => {
+    const stripe = await stripePromise;
+
+    // Call the backend to create a checkout session...
+    const checkoutSession = await axios.post("/api/create-checkout-session", {
+      items,
+      email: session.user.email,
+    });
+
+    // After have created a session, redirect the user/customer to Stripe Checkout
+    // eslint-disable-next-line no-unused-vars
+    const result = await stripe.redirectToCheckout({
+      sessionId: checkoutSession.data.id,
+    });
+  };
 
   return (
     <div className="lg:flex">
@@ -45,6 +65,8 @@ export default function Checkout(): ReactElement {
               </span>
             </h2>
             <button
+              role="link"
+              onClick={() => createCheckoutSession()}
               disabled={!session}
               className={`button mt-2 ${
                 !session &&
