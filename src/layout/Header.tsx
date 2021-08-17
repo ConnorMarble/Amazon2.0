@@ -8,8 +8,10 @@ import {
 } from "@heroicons/react/outline";
 import { signIn, signOut, useSession } from "next-auth/client";
 import { useRouter } from "next/dist/client/router";
+import { useAppSelector } from "src/redux/hooks";
 
 export default function Header(): ReactElement {
+  const selectBasket = useAppSelector((state) => state.basket.items);
   const [session] = useSession();
   const router = useRouter();
 
@@ -53,7 +55,7 @@ export default function Header(): ReactElement {
             className="relative link flex items-center"
           >
             <span className="absolute top-0 right-0 md:right-10 h-4 w-4 bg-yellow-400 text-center rounded-full text-black font-bold">
-              0
+              {selectBasket.length}
             </span>
             <ShoppingCartIcon className="h-10" />
             <p className="hidden md:inline font-extrabold md:text-sm mt-2">

@@ -1,9 +1,9 @@
 import { ReactElement } from "react";
-import { ProductsInterface } from "src/types/interface";
+import { ProductInterface } from "src/types/interface";
 import Product from "./Product";
 
 interface ProductFeedProps {
-  products: ProductsInterface[];
+  products: ProductInterface[];
 }
 
 export default function ProductFeed({

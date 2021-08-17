@@ -1,10 +1,10 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Banner from "src/components/Banner";
 import ProductFeed from "src/components/ProductFeed";
-import { ProductsInterface } from "src/types/interface";
+import { ProductInterface } from "src/types/interface";
 
 interface HomeProps {
-  products: ProductsInterface[];
+  products: ProductInterface[];
 }
 
 const Home: NextPage<HomeProps> = ({ products }: HomeProps) => {

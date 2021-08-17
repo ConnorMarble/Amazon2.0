@@ -2,10 +2,12 @@ import { StarIcon } from "@heroicons/react/solid";
 import Image from "next/image";
 import { ReactElement, useState } from "react";
 import Currency from "react-currency-formatter";
-import { ProductsInterface } from "src/types/interface";
+import { addToBasket } from "src/redux/features/basket/basketSlice";
+import { useAppDispatch } from "src/redux/hooks";
+import { ProductInterface } from "src/types/interface";
 
 interface ProductProps {
-  product: ProductsInterface;
+  product: ProductInterface;
 }
 
 const MAX_RATING = 5;
@@ -17,6 +19,12 @@ export default function Product({ product }: ProductProps): ReactElement {
   );
 
   const [hasPrime] = useState(Math.random() < 0.5);
+  const dispatch = useAppDispatch();
+
+  const addItemToBasket = () => {
+    const newProduct = { ...product, rating, hasPrime };
+    dispatch(addToBasket(newProduct));
+  };
 
   return (
     <div className="relative flex flex-col m-5 bg-white z-30 p-10">
@@ -48,7 +56,9 @@ export default function Product({ product }: ProductProps): ReactElement {
           <p className="text-xs text-gray-500">FREE Next-day Delivery</p>
         </div>
       )}
-      <button className="mt-auto button">Add to Basket</button>
+      <button onClick={() => addItemToBasket()} className="mt-auto button">
+        Add to Basket
+      </button>
     </div>
   );
 }
